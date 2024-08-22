@@ -12,7 +12,6 @@ const root = fs.readFileSync(path.resolve(tpth, 'HeaderMegaMenu.tsx'), 'utf8')
 const temp = fs.readFileSync(path.resolve(tpth, 'MegaMenu.tsx'), 'utf8')
 
 function sculptSingle(k, v) {
-    console.log("=============2==============");
     const template = hb.compile(temp);
     const icons = [];
     const description = v[0];
@@ -41,6 +40,7 @@ function sculpt() {
     const r = template({top});
     const fil = path.resolve(loc, "HeaderMegaMenu.tsx");
     fs.writeFileSync(fil, r);
+    console.log("=============2==============");
     _.forEach(top, function(value) {
         sculptSingle(value, yml.data.nav[value]);
     });
