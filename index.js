@@ -43,4 +43,4 @@ function sculpt() {
     });
 }
 
-module.exports = sculpt;
+sculpt();
