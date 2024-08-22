@@ -32,7 +32,7 @@ function sculpt() {
         fs.mkdirSync(loc);
     }
     const top = [];
-    _.forOwn(yml.data.nav, function(value, key) {
+    _.forOwn(yml.data, function(value, key) {
         top.push(key);
     });
     fs.copyFileSync(path.resolve(tpth, "HeaderMegaMenu.module.css"), path.resolve(loc, "HeaderMegaMenu.module.css"));
@@ -40,9 +40,9 @@ function sculpt() {
     const r = template({top});
     const fil = path.resolve(loc, "HeaderMegaMenu.tsx");
     fs.writeFileSync(fil, r);
-    console.log("=============2==============");
     _.forEach(top, function(value) {
-        sculptSingle(value, yml.data.nav[value]);
+        console.log("=============2==============");
+        sculptSingle(value, yml.data[value]);
     });
 }
 
