@@ -37,7 +37,7 @@ function sculpt() {
     _.forOwn(yml.data.nav, function(value, key) {
         top.push(key);
     });
-    fs.copyFileSync(path.resolve(tpth, "HeaderMegaMenu.module.css"), loc);
+    fs.copyFileSync(path.resolve(tpth, "HeaderMegaMenu.module.css"), path.resolve(loc, "HeaderMegaMenu.module.css"));
     const template = hb.compile(root);
     const r = template({top});
     const fil = path.resolve(loc, "HeaderMegaMenu.tsx");
