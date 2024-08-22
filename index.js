@@ -3,10 +3,13 @@ const _ = require('lodash')
 const fs = require('fs')
 const path = require('path')
 
+console.log("=============1==============");
 const yml = process.env.TISF_CONFIG
-console.log("===========================", yml);
+console.log(yml);
 const loc = path.resolve(yml.meta.loc);
+console.log(loc);
 const tpth = path.resolve(process.cwd(), "templates");
+console.log(tpth);
 
 const root = fs.readFileSync(path.resolve(tpth, 'HeaderMegaMenu.tsx'), 'utf8')
 const temp = fs.readFileSync(path.resolve(tpth, 'MegaMenu.tsx'), 'utf8')
