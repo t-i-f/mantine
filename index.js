@@ -3,7 +3,6 @@ const _ = require('lodash')
 const fs = require('fs')
 const path = require('path')
 
-console.log("=============1==============");
 const yml = JSON.parse(process.env.TISF_CONFIG);
 const loc = path.resolve("../", yml.meta.loc);
 const tpth = path.resolve(process.cwd(), "templates");
@@ -20,7 +19,6 @@ function sculptSingle(k, v) {
         icons.push(value.icon);
     });
     const o = {title: k, description, nav: v, icons};
-    console.log("=============3==============");
 
     const output = template(o);
     const fil = path.resolve(loc, k+".tsx");
@@ -28,9 +26,10 @@ function sculptSingle(k, v) {
 }
 
 function sculpt() {
-    if (!fs.existsSync(loc)) {
-        fs.mkdirSync(loc);
+    if (fs.existsSync(loc)) {
+        fs.rmdirSync(loc, { recursive: true, force: true });
     }
+    fs.mkdirSync(loc);
     const top = [];
     _.forOwn(yml.data, function(value, key) {
         top.push(key);
@@ -41,11 +40,8 @@ function sculpt() {
     const fil = path.resolve(loc, "HeaderMegaMenu.tsx");
     fs.writeFileSync(fil, r);
     _.forEach(top, function(value) {
-        console.log("=============2==============");
         sculptSingle(value, yml.data[value]);
     });
 }
 
 sculpt();
-
-process.exit();
