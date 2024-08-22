@@ -5,16 +5,14 @@ const path = require('path')
 
 console.log("=============1==============");
 const yml = JSON.parse(process.env.TISF_CONFIG);
-console.dir(yml, {depth: null});
 const loc = path.resolve("../", yml.meta.loc);
-console.log(loc);
 const tpth = path.resolve(process.cwd(), "templates");
-console.log(tpth);
 
 const root = fs.readFileSync(path.resolve(tpth, 'HeaderMegaMenu.tsx'), 'utf8')
 const temp = fs.readFileSync(path.resolve(tpth, 'MegaMenu.tsx'), 'utf8')
 
 function sculptSingle(k, v) {
+    console.log("=============2==============");
     const template = hb.compile(temp);
     const icons = [];
     const description = v[0];
@@ -23,6 +21,7 @@ function sculptSingle(k, v) {
         icons.push(value.icon);
     });
     const o = {title: k, description, nav: v, icons};
+    console.log("=============3==============");
 
     const output = template(o);
     const fil = path.resolve(loc, k+".tsx");
