@@ -48,3 +48,5 @@ function sculpt() {
 }
 
 sculpt();
+
+process.exit();
