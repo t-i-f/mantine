@@ -6,7 +6,7 @@ const path = require('path')
 console.log("=============1==============");
 const yml = JSON.parse(process.env.TISF_CONFIG);
 console.dir(yml, {depth: null});
-const loc = path.resolve(yml.meta.loc);
+const loc = path.resolve("../", yml.meta.loc);
 console.log(loc);
 const tpth = path.resolve(process.cwd(), "templates");
 console.log(tpth);
