@@ -11,15 +11,52 @@ import {
   HoverCard,
   SimpleGrid,
   Text,
+  ThemeIcon,
   UnstyledButton,
+  rem
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
-import type { FC, PropsWithChildren } from "react";
+import { 
+{{#each icons}}
+  {{ this }},
+{{/each}}
+  IconChevronDown,
+  IconChevronUp
+} from '@tabler/icons-react';
 import classes from "./HeaderMegaMenu.module.css";
-import { MenuItemProps } from "./util";
 
-const MenuItem: FC<PropsWithChildren<MenuItemProps>> = ({ title, desc, children }) => {
+const mockdata = [
+{{#each nav}}
+{
+  icon: {{icon}},
+  title: "{{title}}",
+  description: "{{description}}",
+},
+{{/each}}
+];
+
+const links = mockdata.map((item) => (
+  <UnstyledButton className={classes.subLink} key={item.title}>
+    <Group wrap="nowrap" align="flex-start">
+      <ThemeIcon size={34} variant="default" radius="md">
+        <item.icon
+          className={classes.iconBig}
+        />
+      </ThemeIcon>
+      <div>
+        <Text size="sm" fw={500}>
+          {item.title}
+        </Text>
+        <Text size="xs" c="dimmed">
+          {item.description}
+        </Text>
+      </div>
+    </Group>
+  </UnstyledButton>
+));
+
+const {{title}} = () => {
+
   return (
     <HoverCard
       width={600}
@@ -32,7 +69,7 @@ const MenuItem: FC<PropsWithChildren<MenuItemProps>> = ({ title, desc, children 
         <a href="#" className={classes.link}>
           <Center inline>
             <Box component="span" mr={5}>
-              {title}
+              {{{title}}}
             </Box>
             <IconChevronDown className={classes.iconSmall} />
           </Center>
@@ -41,7 +78,7 @@ const MenuItem: FC<PropsWithChildren<MenuItemProps>> = ({ title, desc, children 
 
       <HoverCard.Dropdown className={classes.overflowHidden}>
         <Group justify="space-between" px="md">
-          <Text fw={500}>{title}</Text>
+          <Text fw={500}>{{{title}}}</Text>
           <Anchor href="#" fz="xs">
             View all
           </Anchor>
@@ -50,17 +87,17 @@ const MenuItem: FC<PropsWithChildren<MenuItemProps>> = ({ title, desc, children 
         <Divider my="sm" />
 
         <SimpleGrid cols={2} spacing={0}>
-          {children}
+          {links}
         </SimpleGrid>
 
         <div className={classes.dropdownFooter}>
           <Group justify="space-between">
             <div>
               <Text fw={500} fz="sm">
-                {title}
+                {{{title}}}
               </Text>
               <Text size="xs" c="dimmed">
-                {desc}
+                {{{description}}}
               </Text>
             </div>
             <Button variant="default">Get started</Button>
@@ -71,26 +108,23 @@ const MenuItem: FC<PropsWithChildren<MenuItemProps>> = ({ title, desc, children 
   );
 };
 
-export const MenuMobile: FC<PropsWithChildren<MenuItemProps>> = ({ title, children, desc }) => {
+const {{title}}Mobile = () => {
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
 
-  return (
-    <>
-      <UnstyledButton className={classes.link} onClick={toggleLinks}>
-        <Center inline>
-          <Box component="span" mr={5}>
-            {title}
-          </Box>
-          {linksOpened ? (
-            <IconChevronUp className={classes.iconSmall} />
-          ) : (
-            <IconChevronDown className={classes.iconSmall} />
-          )}
-        </Center>
-      </UnstyledButton>
-      <Collapse in={linksOpened}>{children}</Collapse>
-    </>
-  );
-};
+  return (<>
+    <UnstyledButton className={classes.link} onClick={toggleLinks}>
+    <Center inline>
+      <Box component="span" mr={5}>
+        {{{title}}}
+      </Box>
+      {linksOpened ? <IconChevronUp className={classes.iconSmall} /> : <IconChevronDown className={classes.iconSmall} />}
+    </Center>
+  </UnstyledButton>
+  <Collapse in={linksOpened}>{links}</Collapse>
+  </>
+  )
+}
 
-export default MenuItem;
+{{title}}.Mobile = {{title}}Mobile;
+
+export default {{title}};

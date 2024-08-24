@@ -13,11 +13,9 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./HeaderMegaMenu.module.css";
-import {
 {{#each top}}
-  {{ this }},  
+import {{ this }} from "./{{ this }}";  
 {{/each}}
-} from "./util";
 
 
 export function HeaderMegaMenu() {
@@ -28,14 +26,14 @@ export function HeaderMegaMenu() {
     <Box pb={120}>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
-          <a href="{{vars.home}}" className={classes.logo}>
-            <Image height={40} width={150} src="{{vars.logo}}" alt="Logo" />
+          <a href="{{meta.home}}" className={classes.logo}>
+            <Image height={40} width={150} src="{{meta.logo}}" alt="Logo" />
           </a>
 
           <Group h="100%" gap={0} visibleFrom="sm">
           
           {{#each top}}
-          { {{ this }}.Web }
+            <{{ this }} />
           {{/each}}
 
           </Group>
@@ -64,7 +62,7 @@ export function HeaderMegaMenu() {
           <Divider my="sm" />
 
           {{#each top}}
-          { {{ this }}.Mobile }
+          <{{ this }}.Mobile />
           {{/each}}
 
         </ScrollArea>
