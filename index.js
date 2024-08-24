@@ -12,6 +12,22 @@ const temp = fs.readFileSync(path.resolve(tpth, "MegaMenu.tsx"), "utf8");
 const dtmp = fs.readFileSync(path.resolve(tpth, "data.ts"), "utf8");
 const etmp = fs.readFileSync(path.resolve(tpth, "util.tsx"), "utf8");
 
+function sculptData(data) {
+  let icons = [];
+  _.forOwn(data, function (v, k) {
+    _.forEach(v, function (value) {
+      if (typeof value !== "string") {
+        icons.push(value.icon);
+      }
+    });
+  });
+  icons = _.uniq(icons);
+  const template = hb.compile(dtmp);
+  const r = template({ data, icons });
+  const fil = path.resolve(loc, "data.ts");
+  fs.writeFileSync(fil, r);
+}
+
 function sculptSingle(data) {
   const template = hb.compile(etmp);
   const r = template({ data });
